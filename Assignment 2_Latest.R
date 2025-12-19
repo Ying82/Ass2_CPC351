@@ -94,7 +94,7 @@ hist(dataset$calories,
 
 #--------------Q7-----------------
 # start the plot x-axis=calories y-axis=category
-ggplot(food_data, aes(x = calories, y = reorder(category, calories, FUN = median))) +  # create boxplots, set box color, transparency
+ggplot(dataset, aes(x = calories, y = reorder(category, calories, FUN = median))) +  # create boxplots, set box color, transparency
   geom_boxplot(fill = "magenta", alpha = 0.7) +
   labs(
     title = "Boxplot of Calories by Category",
@@ -143,7 +143,7 @@ ggplot(corr_melt, aes(Var1, Var2, fill = value)) +
 # ------------------Q10------------------
 # calculate average Vitamin C per category
 vit_summary <- aggregate(vitamin_c ~ category,
-                         data = food_data,
+                         data = dataset,
                          FUN = function(x) mean(x, na.rm = TRUE))
 
 # sort from highest to lowest
@@ -153,9 +153,8 @@ vit_summary <- vit_summary[order(-vit_summary$vitamin_c), ]
 top_10_vit_c <- vit_summary[1:10, ]
 
 # plot bar chart and ranked from highest to lowest
-ggplot(top_10_vit_c, aes(x = reorder(category, vitamin_c), y = vitamin_c)) +
+ggplot(top_10_vit_c, aes(x = vitamin_c, y = reorder(category, vitamin_c))) +
   geom_col(fill = "orange") +
-  coord_flip() +
   labs(
     title = "Top 10 Food Categories by Average Vitamin C",
     x = "Category",
@@ -236,7 +235,7 @@ ggplot(top3_categories, aes(x = category, y = carbs, fill = category)) +
 # --------------Q13--------------------
 # Sums up all calories within each category
   category_totals <- aggregate(calories ~ category,
-                               data = food_data,
+                               data = dataset,
                                FUN = function(x) sum(x, na.rm = TRUE))
   
 # plot stacked bar chart
@@ -369,6 +368,7 @@ ggplot(macronutrient_long,
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 8),
         plot.title = element_text(hjust = 0.5))
+
 
 
 
