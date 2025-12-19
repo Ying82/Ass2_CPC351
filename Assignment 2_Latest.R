@@ -54,17 +54,13 @@ ggplot(category_df, aes(x = Count, y = reorder(Category, Count))) +
   theme(axis.text.y = element_text(size = 8)) 
 
 #----------------Q4------------------
-# 1. sort the data by calories in descending order
-# 2. take the top 10 rows
-# 3. select only the name, category, and calories columns
-
 # sort 
 sorted_foods <- dataset[order(-dataset$calories), ]
 
 # top 10 rows
 top_10_caloric_foods <- sorted_foods[1:10, c("food_name", "category", "calories")]
 
-# print the result
+# print top 10 result
 print(top_10_caloric_foods)
 
 # nicer table
@@ -98,15 +94,14 @@ hist(dataset$calories,
 
 #--------------Q7-----------------
 # start the plot x-axis=calories y-axis=category
-ggplot(food_data, aes(x = calories, y = category)) +
-# create boxplots, set box color, transparency
+ggplot(food_data, aes(x = calories, y = reorder(category, calories, FUN = median))) +  # create boxplots, set box color, transparency
   geom_boxplot(fill = "magenta", alpha = 0.7) +
   labs(
     title = "Boxplot of Calories by Category",
     x = "Food Category",
     y = "Calories"
   ) +
-# Apply a theme
+  # Apply a theme
   theme_minimal()
 
 #----------Q8---------
@@ -146,10 +141,7 @@ ggplot(corr_melt, aes(Var1, Var2, fill = value)) +
        y = "")
 
 # ------------------Q10------------------
-# 1. Calculate average Vitamin C per category
-# 2. Sort in descending order
-# 3. Take the top 10
-
+# calculate average Vitamin C per category
 vit_summary <- aggregate(vitamin_c ~ category,
                          data = dataset,
                          FUN = function(x) mean(x, na.rm = TRUE))
@@ -160,7 +152,7 @@ vit_summary <- vit_summary[order(-vit_summary$vitamin_c), ]
 # top 10
 top_10_vit_c <- vit_summary[1:10, ]
 
-# Plotting
+# plot
 ggplot(top_10_vit_c, aes(x = reorder(category, vitamin_c), y = vitamin_c)) +
   geom_col(fill = "orange") +
   coord_flip() +
@@ -241,13 +233,12 @@ ggplot(top3_categories, aes(x = category, y = carbs, fill = category)) +
   )
 
 # --------------Q13--------------------
-# 1. Summarize total calories by category
-# 2. Create single stacked bar chart
+# summarize total calories by category
 category_totals <- aggregate(calories ~ category,
                              data = dataset,
                              FUN = function(x) sum(x, na.rm = TRUE))
 
-# plot
+# plot stacked bar chart
 ggplot(category_totals, aes(x = "", y = calories, fill = category)) +
   geom_col(width = 0.5) +
   labs(
@@ -376,4 +367,5 @@ ggplot(macronutrient_long,
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 8),
         plot.title = element_text(hjust = 0.5))
+
 
