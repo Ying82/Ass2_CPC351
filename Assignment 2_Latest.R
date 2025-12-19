@@ -233,7 +233,7 @@ ggplot(top3_categories, aes(x = category, y = carbs, fill = category)) +
   )
 
 # --------------Q13--------------------
-# Sums up all calories within each category
+# sums up all calories within each category
   category_totals <- aggregate(calories ~ category,
                                data = dataset,
                                FUN = function(x) sum(x, na.rm = TRUE))
@@ -247,7 +247,7 @@ ggplot(top3_categories, aes(x = category, y = carbs, fill = category)) +
       y = "Total Calories"
     ) +
     theme_minimal() +
-    # removes the x-axis text because there is only one "stack".
+    # removes the x-axis text because there is only one stack
     theme(
       axis.text.x = element_blank(),
       axis.ticks.x = element_blank()
@@ -368,6 +368,7 @@ ggplot(macronutrient_long,
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 8),
         plot.title = element_text(hjust = 0.5))
+
 
 
 
