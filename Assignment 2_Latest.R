@@ -97,14 +97,16 @@ hist(dataset$calories,
      ylab = "Count")
 
 #--------------Q7-----------------
-ggplot(dataset, aes(x = category, y = calories)) +
+# start the plot x-axis=calories y-axis=category
+ggplot(food_data, aes(x = calories, y = category)) +
+# create boxplots, set box color, transparency
   geom_boxplot(fill = "magenta", alpha = 0.7) +
-  coord_flip() +
   labs(
     title = "Boxplot of Calories by Category",
     x = "Food Category",
     y = "Calories"
   ) +
+# Apply a theme
   theme_minimal()
 
 #----------Q8---------
@@ -374,3 +376,4 @@ ggplot(macronutrient_long,
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 8),
         plot.title = element_text(hjust = 0.5))
+
